@@ -26,6 +26,7 @@ import {
   ShoppingBag,
   SquareArrowUpRight,
   Stethoscope,
+  UserPlus,
   UserRound,
   Users,
   UtensilsCrossed,
@@ -249,6 +250,12 @@ export const sidebarItems: NavGroup[] = [
         title: "Users",
         url: "/dashboard/users",
         icon: Users,
+      },
+      {
+        id: "add-user",
+        title: "Add user",
+        url: "/dashboard/users/new",
+        icon: UserPlus,
       },
       {
         id: "roles",
