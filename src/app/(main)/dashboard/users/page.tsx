@@ -4,8 +4,8 @@ import { users } from "./_components/data";
 import { Users } from "./_components/users";
 
 export const metadata: Metadata = {
-  title: "Open Source User Management Dashboard with shadcn/ui",
-  description: "Explore an open source user management dashboard for browsing, filtering, and managing user accounts.",
+  title: "Users | Studio Admin",
+  description: "Browse, search, and filter organization members by role, team, status, and workspace.",
   alternates: {
     canonical: "/dashboard/users",
   },
