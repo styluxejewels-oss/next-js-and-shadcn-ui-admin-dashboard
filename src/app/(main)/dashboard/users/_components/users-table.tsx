@@ -3,6 +3,7 @@ import type { MouseEvent } from "react";
 
 import type { ReactTable } from "@tanstack/react-table";
 
+import { Button } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -34,7 +35,7 @@ function getPageNumbers(currentPage: number, pageCount: number) {
   return [currentPage - 1, currentPage, currentPage + 1];
 }
 
-export function UsersTable({ table }: { table: ReactTable<DataTableFeatures, UserRow> }) {
+export function UsersTable({ onReset, table }: { onReset: () => void; table: ReactTable<DataTableFeatures, UserRow> }) {
   const pageCount = Math.max(table.getPageCount(), 1);
   const currentPage = Math.min(table.state.pagination.pageIndex + 1, pageCount);
   const pageNumbers = getPageNumbers(currentPage, pageCount);
@@ -42,8 +43,10 @@ export function UsersTable({ table }: { table: ReactTable<DataTableFeatures, Use
 
   return (
     <div className="flex flex-1 flex-col gap-4">
+      <p className="px-4 text-xs text-muted-foreground md:hidden">Scroll horizontally to see all user details.</p>
       <div>
-        <Table className="**:data-[slot='table-cell']:px-4 **:data-[slot='table-head']:px-4">
+        <Table className="min-w-[760px] **:data-[slot='table-cell']:px-4 **:data-[slot='table-head']:px-4">
+          <caption className="sr-only">Organization user directory</caption>
           <TableHeader className="[&_tr]:border-t">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -74,7 +77,12 @@ export function UsersTable({ table }: { table: ReactTable<DataTableFeatures, Use
             ) : (
               <TableRow>
                 <TableCell colSpan={table.getVisibleLeafColumns().length} className="h-24 text-center">
-                  No results.
+                  <div className="flex flex-col items-center gap-2 py-4">
+                    <span>No users match these filters.</span>
+                    <Button variant="link" size="sm" onClick={onReset}>
+                      Clear filters
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             )}

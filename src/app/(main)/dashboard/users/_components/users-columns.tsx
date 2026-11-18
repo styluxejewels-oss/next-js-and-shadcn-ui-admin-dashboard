@@ -3,19 +3,11 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Subscribe } from "@tanstack/react-table";
 import { cn } from "cn";
 import { parse } from "date-fns";
-import { Check, Clock, MoreHorizontal, X } from "lucide-react";
+import { Check, Clock, X } from "lucide-react";
 
 import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import type { DataTableFeatures } from "@/lib/data-table-features";
 import { getInitials } from "@/lib/utils";
 
@@ -156,7 +148,7 @@ export const usersColumns: ColumnDef<DataTableFeatures, UserRow>[] = [
   },
   {
     id: "search",
-    accessorFn: (row) => `${row.name} ${row.email}`,
+    accessorFn: (row) => `${row.name} ${row.email} ${row.role} ${row.team} ${row.status} ${row.workspace.join(" ")}`,
     filterFn: "includesString",
     enableHiding: true,
   },
@@ -202,35 +194,5 @@ export const usersColumns: ColumnDef<DataTableFeatures, UserRow>[] = [
     accessorFn: (row) => parse(row.joinedDate, "dd MMM yyyy, h:mm a", new Date()).getTime(),
     header: "Joined date",
     cell: ({ row }) => <div className="text-foreground text-sm">{row.original.joinedDate}</div>,
-  },
-  {
-    id: "actions",
-    header: () => <div className="text-right">Actions</div>,
-    cell: ({ row }) => (
-      <div className="text-right">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              aria-label={`Open actions for ${row.original.name}`}
-              className="text-muted-foreground hover:bg-muted/50 size-8 rounded-md"
-              size="icon-sm"
-              variant="ghost"
-            >
-              <MoreHorizontal className="size-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem>View profile</DropdownMenuItem>
-            <DropdownMenuItem>Edit user</DropdownMenuItem>
-            <DropdownMenuItem>Manage team</DropdownMenuItem>
-            <DropdownMenuItem>Resend invite</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive">Deactivate user</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    ),
-    enableHiding: false,
-    enableSorting: false,
   },
 ];
